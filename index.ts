@@ -1,4 +1,4 @@
-type UnknownResult = {
+type Uncertain = {
     getOr: (defaultValue: any) => any
     getOrRun: <S>(fn: () => S) => any
     getOrThrow: (err?: Error | string) => any
@@ -14,7 +14,7 @@ type Ok<T> = {
     getOrRun: <S>(fn: () => S) => T
     getOrThrow: (err?: Error | string) => T
     mapWithDefault: <S, R>(defaultValue: S, fn: (parameter: T) => R) => R
-} & UnknownResult
+} & Uncertain
 
 type Err<T> = {
     ok: false
@@ -24,7 +24,7 @@ type Err<T> = {
     getOrRun: <S>(fn: () => S) => S
     getOrThrow: (err?: Error | string) => never
     mapWithDefault: <S, R>(defaultValue: S, fn: (parameter: S) => R) => R
-} & UnknownResult
+} & Uncertain
 
 export type Result<T, E> = Ok<T> | Err<E>
 
