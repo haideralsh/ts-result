@@ -27,3 +27,15 @@ type Err<T> = {
 } & UnknownResult
 
 export type Result<T, E> = Ok<T> | Err<E>
+
+export const Ok = <T>(value: T): Ok<T> => ({
+    ok: true,
+    get: () => value,
+    map: (fn) => fn(value),
+
+    getOr: <S>(defaultValue: S): T => value,
+    getOrRun: <S>(fn: () => S): T => value,
+    getOrThrow: (err?: string | Error): T => value,
+    mapWithDefault: <S, R>(defaultValue: S, fn: (parameter: T) => R) =>
+        fn(value),
+})
