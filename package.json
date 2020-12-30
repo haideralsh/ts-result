@@ -1,22 +1,23 @@
 {
-  "name": "result-ts",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+    "name": "result-ts",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
     "scripts": {
         "build": "tsc",
         "fmt": "prettier --write .",
         "test": "jest"
     },
-    "url": "git+https://github.com/haideralsh/result-ts.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/haideralsh/result-ts/issues"
-  },
-  "homepage": "https://github.com/haideralsh/result-ts#readme"
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/haideralsh/result-ts.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/haideralsh/result-ts/issues"
+    },
     "homepage": "https://github.com/haideralsh/result-ts#readme",
     "devDependencies": {
         "@types/jest": "^26.0.16",
