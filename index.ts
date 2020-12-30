@@ -39,3 +39,28 @@ export const Ok = <T>(value: T): Ok<T> => ({
     mapWithDefault: <S, R>(defaultValue: S, fn: (parameter: T) => R) =>
         fn(value),
 })
+
+export const Err = <T>(e: T): Err<T> => ({
+    ok: false,
+    getError: () => e,
+
+    getOr: <S>(defaultValue: S): S => defaultValue,
+    getOrRun: <S>(fn: () => S) => fn(),
+    getOrThrow: (err?: Error | string): never => {
+        if (err) {
+            if (err instanceof Error) {
+                throw err
+            }
+            if (typeof err === 'string') {
+                throw new Error(err)
+            }
+        }
+        if (typeof e === 'string') {
+            throw new Error(e)
+        }
+
+        throw new Error('Attempted to retrieve value on erroneous result')
+    },
+    mapWithDefault: <T, R>(defaultValue: T, fn: (parameter: T) => R): R =>
+        fn(defaultValue),
+})
