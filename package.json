@@ -31,4 +31,8 @@
         "semi": false,
         "singleQuote": true
     },
+    "jest": {
+        "preset": "ts-jest",
+        "testEnvironment": "node"
+    }
 }
