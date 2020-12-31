@@ -40,9 +40,9 @@ export const Ok = <T>(value: T): Ok<T> => ({
         fn(value),
 })
 
-export const Err = <T>(e: T): Err<T> => ({
+export const Err = <T>(errorValue: T): Err<T> => ({
     ok: false,
-    getError: () => e,
+    getError: () => errorValue,
 
     getOr: <S>(defaultValue: S): S => defaultValue,
     getOrRun: <S>(fn: () => S) => fn(),
@@ -55,8 +55,8 @@ export const Err = <T>(e: T): Err<T> => ({
                 throw new Error(err)
             }
         }
-        if (typeof e === 'string') {
-            throw new Error(e)
+        if (typeof errorValue === 'string') {
+            throw new Error(errorValue)
         }
 
         throw new Error('Attempted to retrieve value on erroneous result')
