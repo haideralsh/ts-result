@@ -16,4 +16,15 @@ describe('Ok object constructor', () => {
         const okObj = Ok('foo')
         okObj.ok === true && expect(okObj.get()).toBe('foo')
     })
+
+    /*---------------------- getOr ----------------------*/
+    it('provides a `getOr` function', () => {
+        const okObj = Ok('foo')
+        okObj.ok === true && expect(okObj.getOr).toBeInstanceOf(Function)
+    })
+
+    it('returns the Ok value when calling the `getOr` function', () => {
+        const okObj = Ok('foo')
+        okObj.ok === true && expect(okObj.getOr('bar')).toBe('foo')
+    })
 })
