@@ -7,12 +7,12 @@ describe('Ok object constructor', () => {
     })
 
     /*---------------------- get ----------------------*/
-    it('returns an object with a `get` function', () => {
+    it('provides a `get` function', () => {
         const okObj = Ok('foo')
         okObj.ok === true && expect(okObj.get).toBeInstanceOf(Function)
     })
 
-    it('returns an object with a `get` function that returns the Ok value', () => {
+    it('returns the Ok value when calling the `get` function', () => {
         const okObj = Ok('foo')
         okObj.ok === true && expect(okObj.get()).toBe('foo')
     })
