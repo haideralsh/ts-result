@@ -38,4 +38,27 @@ describe('Ok object constructor', () => {
         const okObj = Ok('foo')
         okObj.ok === true && expect(okObj.getOrRun(() => 'bar')).toBe('foo')
     })
+
+    /*---------------------- getOrThrow ----------------------*/
+    it('provides a `getOrThrow` function', () => {
+        const okObj = Ok('foo')
+        okObj.ok === true && expect(okObj.getOrThrow).toBeInstanceOf(Function)
+    })
+
+    it('returns the Ok value when calling the `getOrThrow` function with no arguments', () => {
+        const okObj = Ok('foo')
+        okObj.ok === true && expect(okObj.getOrThrow()).toBe('foo')
+    })
+
+    it('returns the Ok value when calling the `getOrThrow` with a string argument', () => {
+        const okObj = Ok('foo')
+        okObj.ok === true &&
+            expect(okObj.getOrThrow('Can not get value')).toBe('foo')
+    })
+
+    it('returns the Ok value when calling the `getOrThrow` with an Error object argument', () => {
+        const okObj = Ok('foo')
+        okObj.ok === true &&
+            expect(okObj.getOrThrow(new Error('Can not get value'))).toBe('foo')
+    })
 })
