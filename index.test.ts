@@ -79,4 +79,24 @@ describe('Ok object constructor', () => {
             expect(okObj.map((x) => x.toUpperCase())).toBe('FOO')
     })
 
+    /*---------------------- mapWithDefault ----------------------*/
+    it('returns an object with a `mapWithDefault` function', () => {
+        const okObj = Ok('foo')
+        okObj.ok === true &&
+            expect(okObj.mapWithDefault).toBeInstanceOf(Function)
+    })
+
+    it('provides the Ok value to the mapWithDefault function', () => {
+        const okObj = Ok('foo')
+        okObj.ok === true &&
+            okObj.mapWithDefault('bar', (x) => expect(x).toBe('foo'))
+    })
+
+    it('applies the mapWithDefault function on the Ok value', () => {
+        const okObj = Ok('foo')
+        okObj.ok === true &&
+            expect(okObj.mapWithDefault('bar', (x) => x.toUpperCase())).toBe(
+                'FOO'
+            )
+    })
 })
