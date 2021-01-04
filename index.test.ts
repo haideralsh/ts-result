@@ -61,4 +61,22 @@ describe('Ok object constructor', () => {
         okObj.ok === true &&
             expect(okObj.getOrThrow(new Error('Can not get value'))).toBe('foo')
     })
+
+    /*---------------------- map ----------------------*/
+    it('returns an object with a `map` function', () => {
+        const okObj = Ok('foo')
+        okObj.ok === true && expect(okObj.map).toBeInstanceOf(Function)
+    })
+
+    it('provides the Ok value to the map function', () => {
+        const okObj = Ok('foo')
+        okObj.ok === true && okObj.map((x) => expect(x).toBe('foo'))
+    })
+
+    it('applies the map function on the Ok value', () => {
+        const okObj = Ok('foo')
+        okObj.ok === true &&
+            expect(okObj.map((x) => x.toUpperCase())).toBe('FOO')
+    })
+
 })
