@@ -128,4 +128,15 @@ describe('Err object constructor', () => {
         const errObj = Err('foo')
         errObj.ok === false && expect(errObj.getOr('bar')).toBe('bar')
     })
+
+    /*---------------------- getOrRun ----------------------*/
+    it('provides a `getOrRun` function', () => {
+        const errObj = Err('foo')
+        errObj.ok === false && expect(errObj.getOrRun).toBeInstanceOf(Function)
+    })
+
+    it('runs the passed function value when calling the `getOrRun` function', () => {
+        const errObj = Err('foo')
+        errObj.ok === false && expect(errObj.getOrRun(() => 'bar')).toBe('bar')
+    })
 })
