@@ -139,4 +139,35 @@ describe('Err object constructor', () => {
         const errObj = Err('foo')
         errObj.ok === false && expect(errObj.getOrRun(() => 'bar')).toBe('bar')
     })
+
+    /*---------------------- getOrThrow ----------------------*/
+    it('provides a `getOrThrow` function', () => {
+        const errObj = Err('foo')
+        errObj.ok === false &&
+            expect(errObj.getOrThrow).toBeInstanceOf(Function)
+    })
+
+    it('throws error when calling the `getOrThrow` function with no arguments', () => {
+        const errObj = Err('foo')
+        errObj.ok === false &&
+            expect(() => {
+                errObj.getOrThrow()
+            }).toThrowError()
+    })
+
+    it('throws error with the passed string when calling the `getOrThrow` with a string argument', () => {
+        const errObj = Err('foo')
+        errObj.ok === false &&
+            expect(() => {
+                errObj.getOrThrow('Can not get value')
+            }).toThrow(new Error('Can not get value'))
+    })
+
+    it('throws the passed error when calling the `getOrThrow` with an Error object argument', () => {
+        const errObj = Err('foo')
+        errObj.ok === false &&
+            expect(() => {
+                errObj.getOrThrow(new Error('Can not get value'))
+            }).toThrow(new Error('Can not get value'))
+    })
 })
