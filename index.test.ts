@@ -106,4 +106,15 @@ describe('Err object constructor', () => {
         const errObj = Err('foo')
         expect(errObj.ok).toBe(false)
     })
+
+    /*---------------------- getError ----------------------*/
+    it('provides a `getError` function', () => {
+        const errObj = Err('foo')
+        errObj.ok === false && expect(errObj.getError).toBeInstanceOf(Function)
+    })
+
+    it('returns the Err value when calling the `getError` function', () => {
+        const errObj = Err('foo')
+        errObj.ok === false && expect(errObj.getError()).toBe('foo')
+    })
 })
