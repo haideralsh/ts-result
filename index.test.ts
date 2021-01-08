@@ -170,4 +170,25 @@ describe('Err object constructor', () => {
                 errObj.getOrThrow(new Error('Can not get value'))
             }).toThrow(new Error('Can not get value'))
     })
+
+    /*---------------------- mapWithDefault ----------------------*/
+    it('returns an object with a `mapWithDefault` function', () => {
+        const errObj = Err('foo')
+        errObj.ok === false &&
+            expect(errObj.mapWithDefault).toBeInstanceOf(Function)
+    })
+
+    it('provides the default value to the mapWithDefault function', () => {
+        const errObj = Err('foo')
+        errObj.ok === false &&
+            errObj.mapWithDefault('bar', (x) => expect(x).toBe('bar'))
+    })
+
+    it('applies the mapWithDefault function on the default value', () => {
+        const errObj = Err('foo')
+        errObj.ok === false &&
+            expect(errObj.mapWithDefault('bar', (x) => x.toUpperCase())).toBe(
+                'BAR'
+            )
+    })
 })
