@@ -100,3 +100,10 @@ describe('Ok object constructor', () => {
             )
     })
 })
+
+describe('Err object constructor', () => {
+    it('sets the `ok` key on the returned object to false', () => {
+        const errObj = Err('foo')
+        expect(errObj.ok).toBe(false)
+    })
+})
