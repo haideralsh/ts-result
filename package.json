@@ -1,8 +1,11 @@
 {
     "name": "result-ts",
     "version": "1.0.0",
-    "description": "",
-    "main": "index.js",
+    "description": "A zero-dependency Result type for typescript inspired by Rust",
+    "files": [
+        "dist"
+    ],
+    "main": "dist/index.js",
     "scripts": {
         "build": "tsc",
         "fmt": "prettier --write .",
@@ -12,9 +15,14 @@
         "type": "git",
         "url": "git+https://github.com/haideralsh/result-ts.git"
     },
-    "keywords": [],
-    "author": "",
-    "license": "ISC",
+    "keywords": [
+        "result",
+        "type",
+        "typescript",
+        "error-handeling"
+    ],
+    "author": "Haider Alshamma",
+    "license": "MIT",
     "bugs": {
         "url": "https://github.com/haideralsh/result-ts/issues"
     },
