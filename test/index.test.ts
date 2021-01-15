@@ -1,4 +1,4 @@
-import { Result, Ok, Err } from './index'
+import { Result, Ok, Err } from '../src/index'
 
 describe('Ok object constructor', () => {
     it('sets the `ok` key on the returned object to true', () => {
