@@ -23,6 +23,12 @@ if (ageResult.ok === true) {
 }
 ```
 
+## What is a Result type and why should I use it?
+
+A `Result` type is the result of a computation that may fail. The type is used
+for returning and propagating errors. It is helpful to give additional
+information when things go wrong.
+
 ### Example
 
 Let us say that we want to insert a user into our database:
