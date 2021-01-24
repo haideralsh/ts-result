@@ -17,8 +17,11 @@ function isReasonableAge(age: number): Result<number, string> {
 
 let ageResult = isReasonableAge(9000)
 if (ageResult.ok === true) {
-    const age = ageResult.get() // returns the Ok value
-    // Do stuff with `age`
+    const age = ageResult.get()
+} else {
+    console.error(ageResult.getError()) // Are you some kind of a turtle?
+}
+```
 } else {
     console.error(ageResult.getError()) // returns the Err value
 }
