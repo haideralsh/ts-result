@@ -133,3 +133,15 @@ if (insertResult.ok === true) {
     const errorMsg = insertResult.getError()
 }
 ```
+
+## API
+
+### Types
+
+#### `Result<T, S>`
+
+A `Result` type accepts two generic types. The first (`T`) must match the object type
+passed to `Ok`, while the second (`S`) must match the object type passed to `Err`.
+
+A function with a return type `Result` _must_ return both an `Ok` and an `Err` results
+that match their respective types.
