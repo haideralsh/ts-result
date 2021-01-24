@@ -27,7 +27,7 @@ if (ageResult.ok === true) {
 
 Let us say that we want to insert a user into our data store:
 
-```js
+```typescript
 function insert(info: UserInfo): User {
     const user = new User(info)
     return new UserService.insert(user)
@@ -40,7 +40,7 @@ caller of the function above to know that such failure could happen without divi
 We could handle the potential failure ourselves and return nothing when the
 failure happens:
 
-```js
+```typescript
 function insert(info: UserInfo): User | null {
     const user = new User(info)
 
@@ -59,7 +59,7 @@ a way to know what is the error that occurred.
 
 We can change the null to be a string instead:
 
-```js
+```typescript
 function insert(info: UserInfo): User | string {
     const user = new User(info)
 
@@ -78,7 +78,7 @@ have to check if the returned type is a `string` or a `User` which can be non-tr
 This problem is exasperated when we both the okay and error results share the same type.
 Let us say we only want to return the user id instead of the whole `User` object:
 
-```js
+```typescript
 function insert(info: UserInfo): string {
     const user = new User(info)
 
@@ -99,7 +99,7 @@ handling potentially erroneous results.
 
 We can rewrite the above example into this:
 
-```js
+```typescript
 import { Result, Ok, Err } from 'result-ts'
 
 function insert(info: UserInfo): Result<string, string> {
@@ -118,7 +118,7 @@ function insert(info: UserInfo): Result<string, string> {
 Now the caller of this function can use the `ok` attribute to know which type of
 result is returned
 
-```js
+```typescript
 const insertResult = insert(info)
 
 if (insertResult.ok === true) {
