@@ -25,7 +25,7 @@ if (ageResult.ok === true) {
 
 ### Example
 
-Let us say that we want to insert a user into our data store:
+Let us say that we want to insert a user into our database:
 
 ```typescript
 function insert(info: UserInfo): User {
@@ -75,7 +75,7 @@ function insert(info: UserInfo): User | string {
 This is not any better because now we lose the TypeScript null warning and we still
 have to check if the returned type is a `string` or a `User` which can be non-trivial.
 
-This problem is exasperated when we both the okay and error results share the same type.
+This problem becomes more pronounced when both the okay and error results share the same type.
 Let us say we only want to return the user id instead of the whole `User` object:
 
 ```typescript
