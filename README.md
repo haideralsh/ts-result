@@ -5,6 +5,8 @@
 > A zero-dependency Result type for Typescript inspired by Rust
 ## Usage
 
+Example adapted from the [Elm guide](https://guide.elm-lang.org/error_handling/result.html)
+
 ```js
 import { Result, Ok, Err } from 'result-ts'
 
