@@ -2,7 +2,7 @@
 
 # result-ts
 
-> A zero-dependency Result type for Typescript inspired by Rust
+> A zero-dependency Result type for TypeScript inspired by Rust
 ## Usage
 
 Example adapted from the [Elm guide](https://guide.elm-lang.org/error_handling/result.html)
@@ -33,12 +33,13 @@ information when things go wrong.
 
 ### Example
 
-Let us say that we want to insert a user into our database:
+Let us say that we want to insert a user into our database and return the user
+entity back:
 
 ```typescript
-function insert(info: UserInfo): User {
-    const user = new User(info)
-    return new UserService.insert(user)
+function addUser(name: string, email: string): User {
+    const user = new User(name, email)
+    return new db.query('insert into user values (?, ?)', name, email)
 }
 ```
 
@@ -49,13 +50,12 @@ We could handle the potential failure ourselves and return nothing when the
 failure happens:
 
 ```typescript
-function insert(info: UserInfo): User | null {
-    const user = new User(info)
+function addUser(name: string, email: string): User | null {
+    const user = new User(name, email)
 
     try {
-        return new UserService.insert(user)
+        return new db.query('insert into user values (?, ?)', name, email)
     } catch (err) {
-        console.log(err)
         return null
     }
 }
@@ -68,13 +68,12 @@ a way to know what is the error that occurred.
 We can change the null to be a string instead:
 
 ```typescript
-function insert(info: UserInfo): User | string {
-    const user = new User(info)
+function addUser(name: string, email: string): User | string {
+    const user = new User(name, email)
 
     try {
-        return new UserService.insert(user)
+        return new db.query('insert into user values (?, ?)', name, email)
     } catch (err) {
-        console.log(err)
         return err.message
     }
 }
@@ -84,23 +83,22 @@ This is not any better because now we lose the TypeScript null warning and we st
 have to check if the returned type is a `string` or a `User` which can be non-trivial.
 
 This problem becomes more pronounced when both the okay and error results share the same type.
-Let us say we only want to return the user id instead of the whole `User` object:
+Let us say we only want to return the user identifier instead of the whole `User` object:
 
 ```typescript
-function insert(info: UserInfo): string {
-    const user = new User(info)
+function addUser(name: string, email: string): string {
+    const user = new User(name, email)
 
     try {
-        const user = new UserService.insert(user)
-        return user.id
+        const user = db.query('insert into user values (?, ?)', name, email)
+        return user.uuid
     } catch (err) {
-        console.log(err)
         return err.message
     }
 }
 ```
 
-Now we can not tell if the string returned is the id or the error message.
+Now we can not tell if the string returned is the user's UUID or the error message.
 
 This is where the `Result` type comes in. It provides a more elegant way for
 handling potentially erroneous results.
@@ -110,14 +108,13 @@ We can rewrite the above example into this:
 ```typescript
 import { Result, Ok, Err } from 'result-ts'
 
-function insert(info: UserInfo): Result<string, string> {
-    const user = new User(info)
+function addUser(name: string, email: string): Result<string, string> {
+    const user = new User(name, email)
 
     try {
-        const user = new UserService.insert(user)
-        return Ok(user.id)
+        const user = db.query('insert into user values (?, ?)', name, email)
+        return Ok(user.uuid)
     } catch (err) {
-        console.log(err)
         return Err('An error has occurred while inserting the user')
     }
 }
@@ -127,7 +124,7 @@ Now the caller of this function can use the `ok` attribute to know which type of
 result is returned
 
 ```typescript
-const insertResult = insert(info)
+const insertResult = addUser('Micheal', 'micheal@example.com')
 
 if (insertResult.ok === true) {
     const userId = insertResult.get()
