@@ -39,8 +39,8 @@ entity back:
 
 ```typescript
 function addUser(name: string, email: string): User {
-    const user = new User(name, email)
-    return new db.query('insert into user values (?, ?)', name, email)
+    const { uuid } = db.query('insert into user values (?, ?)', name, email)
+    return new UserService().getById(uuid)
 }
 ```
 
@@ -52,10 +52,9 @@ failure happens:
 
 ```typescript
 function addUser(name: string, email: string): User | null {
-    const user = new User(name, email)
-
     try {
-        return new db.query('insert into user values (?, ?)', name, email)
+        const { uuid } = db.query('insert into user values (?, ?)', name, email)
+        return new UserService().getById(uuid)
     } catch (err) {
         return null
     }
@@ -70,10 +69,9 @@ We can change the null to be a string instead:
 
 ```typescript
 function addUser(name: string, email: string): User | string {
-    const user = new User(name, email)
-
     try {
-        return new db.query('insert into user values (?, ?)', name, email)
+        const { uuid } = db.query('insert into user values (?, ?)', name, email)
+        return new UserService().getById(uuid)
     } catch (err) {
         return err.message
     }
@@ -88,11 +86,9 @@ Let us say we only want to return the user identifier instead of the whole `User
 
 ```typescript
 function addUser(name: string, email: string): string {
-    const user = new User(name, email)
-
     try {
-        const user = db.query('insert into user values (?, ?)', name, email)
-        return user.uuid
+        const { uuid } = db.query('insert into user values (?, ?)', name, email)
+        return uuid
     } catch (err) {
         return err.message
     }
@@ -110,13 +106,11 @@ We can rewrite the above example into this:
 import { Result, Ok, Err } from 'result-ts'
 
 function addUser(name: string, email: string): Result<string, string> {
-    const user = new User(name, email)
-
     try {
-        const user = db.query('insert into user values (?, ?)', name, email)
-        return Ok(user.uuid)
+        const { uuid } = db.query('insert into user values (?, ?)', name, email)
+        return Ok(uuid)
     } catch (err) {
-        return Err('An error has occurred while inserting the user')
+        return Err(err.message)
     }
 }
 ```
@@ -128,9 +122,9 @@ result is returned
 const insertResult = addUser('Micheal', 'micheal@example.com')
 
 if (insertResult.ok === true) {
-    const userId = insertResult.get()
+    const userId = insertResult.get() // The user's uuid if the insertion succeeded
 } else {
-    const errorMsg = insertResult.getError()
+    const errorMsg = insertResult.getError() // The error message if the insertion failed
 }
 ```
 
