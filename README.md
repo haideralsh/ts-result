@@ -17,7 +17,8 @@ function isReasonableAge(age: number): Result<number, string> {
     return Ok(age)
 }
 
-let ageResult = isReasonableAge(9000)
+const ageResult = isReasonableAge(9000)
+
 if (ageResult.ok === true) {
     const age = ageResult.get()
 } else {
@@ -144,3 +145,76 @@ passed to `Ok`, while the second (`S`) must match the object type passed to `Err
 
 A function with a return type `Result` _must_ return both an `Ok` and an `Err` results
 that match their respective types.
+
+### Functions
+
+#### `Ok(value: T)`
+
+The `Ok` functions accepts a value of type `T` that must match the `T` generic type passed to `Result<T, S>`
+
+```typescript
+import { Result, Ok, Err } from 'result-ts'
+
+function divide(a: number, b: number): Result<number, string> {
+    if (b === 0) {
+        return Err('Division by zero!')
+    }
+
+    return Ok(a / b)
+}
+```
+
+#### The following properties and functions are unique to a result wrapped with an `Ok` function:
+
+#### `ok: true`
+
+The property `ok` will always be true for objects wrapped with an `Ok`
+
+<details>
+  <summary>Example</summary>
+
+```typescript
+const okResult = OK('foo')
+
+console.log(okResult.ok) // true
+```
+
+</details>
+
+#### `get(): T`
+
+The function `get` will unwrap the value wrapped with an `Ok`. You have to check the `ok` property first before being able to use `get`.
+
+<details>
+  <summary>Example</summary>
+
+```typescript
+const okResult = OK('foo')
+
+if (okResult.ok === true) {
+    console.log(okResult.get()) // foo
+}
+```
+
+</details>
+
+#### `map: <S>(fn: (parameter: T) => S): S`
+
+The function `map` will unwrap and apply the supplied function on the value wrapped with an `Ok`. The supplied function must accept the same type as the wrapped value type. The return type of the `map` function will be the same as the one of the supplied function. You have to check the `ok` property first before being able to use `map`.
+
+<details>
+  <summary>Example</summary>
+
+```typescript
+const okResult = OK('foo')
+
+function capitalize(str: string) {
+    return str.toUpperCase()
+}
+
+if (okResult.ok === true) {
+    console.log(okResult.map(capitalize)) // FOO
+}
+```
+
+</details>
