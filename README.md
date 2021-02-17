@@ -3,9 +3,11 @@
 # result-ts
 
 > A zero-dependency Result type for TypeScript inspired by Rust
+
 ## Usage
 
-Example adapted from the [Elm guide](https://guide.elm-lang.org/error_handling/result.html)
+Example adapted from the
+[Elm guide](https://guide.elm-lang.org/error_handling/result.html)
 
 ```js
 import { Result, Ok, Err } from 'result-ts'
@@ -45,7 +47,8 @@ function addUser(name: string, email: string): User {
 ```
 
 However, an insertion operation can sometimes fail. There is no way for the
-caller of the function above to know that such failure could happen without diving into the implementation of the function.
+caller of the function above to know that such failure could happen without
+diving into the implementation of the function.
 
 We could handle the potential failure ourselves and return nothing when the
 failure happens:
@@ -61,9 +64,9 @@ function addUser(name: string, email: string): User | null {
 }
 ```
 
-If TypeScript is configured properly, this could be an improvement since TypeScript
-will warn the caller that the result may be `null`. However, it doesn't provide them
-a way to know what is the error that occurred.
+If TypeScript is configured properly, this could be an improvement since
+TypeScript will warn the caller that the result may be `null`. However, it
+doesn't provide them a way to know what is the error that occurred.
 
 We can change the null to be a string instead:
 
@@ -78,11 +81,13 @@ function addUser(name: string, email: string): User | string {
 }
 ```
 
-This is not any better because now we lose the TypeScript null warning and we still
-have to check if the returned type is a `string` or a `User` which can be non-trivial.
+This is not any better because now we lose the TypeScript null warning and we
+still have to check if the returned type is a `string` or a `User` which can be
+non-trivial.
 
-This problem becomes more pronounced when both the okay and error results share the same type.
-Let us say we only want to return the user identifier instead of the whole `User` object:
+This problem becomes more pronounced when both the okay and error results share
+the same type. Let us say we only want to return the user identifier instead of
+the whole `User` object:
 
 ```typescript
 function addUser(name: string, email: string): string {
@@ -95,7 +100,8 @@ function addUser(name: string, email: string): string {
 }
 ```
 
-Now we can not tell if the string returned is the user's UUID or the error message.
+Now we can not tell if the string returned is the user's UUID or the error
+message.
 
 This is where the `Result` type comes in. It provides a more elegant way for
 handling potentially erroneous results.
@@ -122,7 +128,7 @@ result is returned
 const insertResult = addUser('Micheal', 'micheal@example.com')
 
 if (insertResult.ok === true) {
-    const userId = insertResult.get() // The user's uuid if the insertion succeeded
+    const userId = insertResult.get() // The user's UUID if the insertion succeeded
 } else {
     const errorMsg = insertResult.getError() // The error message if the insertion failed
 }
@@ -134,17 +140,12 @@ if (insertResult.ok === true) {
 
 #### `Result<T, S>`
 
-A `Result` type accepts two generic types. The first (`T`) must match the object type
-passed to `Ok`, while the second (`S`) must match the object type passed to `Err`.
+A `Result` type accepts two generic types. The first (`T`) must match the object
+type passed to `Ok`, while the second (`S`) must match the object type passed to
+`Err`.
 
-A function with a return type `Result` _must_ return both an `Ok` and an `Err` results
-that match their respective types.
-
-### Functions
-
-#### `Ok(value: T)`
-
-The `Ok` functions accepts a value of type `T` that must match the `T` generic type passed to `Result<T, S>`
+A function with a return type `Result` _must_ return both an `Ok` and an `Err`
+results that match their respective types.
 
 ```typescript
 import { Result, Ok, Err } from 'result-ts'
@@ -194,7 +195,11 @@ if (okResult.ok === true) {
 
 #### `map: <S>(fn: (parameter: T) => S): S`
 
-The function `map` will unwrap and apply the supplied function on the value wrapped with an `Ok`. The supplied function must accept the same type as the wrapped value type. The return type of the `map` function will be the same as the one of the supplied function. You have to check the `ok` property first before being able to use `map`.
+The function `map` will unwrap and apply the supplied function on the value
+wrapped with an `Ok`. The supplied function must accept the same type as the
+wrapped value type. The return type of the `map` function will be the same as
+the one of the supplied function. You have to check the `ok` property first
+before being able to use `map`.
 
 <details>
   <summary>Example</summary>
