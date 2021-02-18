@@ -157,26 +157,187 @@ function divide(a: number, b: number): Result<number, string> {
 }
 ```
 
-#### The following properties and functions are unique to a result wrapped with an `Ok` function:
+#### Properties and functions on a result wrapped with `Ok` or `Err`:
 
-#### `ok: true`
+We can use the `ok` attribute in order to know if the result was wrapped with an
+`Ok` or an `Err`
 
-The property `ok` will always be true for objects wrapped with an `Ok`
+#### `ok: boolean`
+
+The property `ok` will be `true` if a result was wrapped with an `Ok` or `false`
+if it was wrapped with `Err`.
 
 <details>
-  <summary>Example</summary>
+  <summary>Example (Ok)</summary>
 
 ```typescript
-const okResult = OK('foo')
+// See `divide` implementation above
+const divideResult = divide(1, 1)
 
-console.log(okResult.ok) // true
+console.log(divideResult.ok) // true
 ```
 
 </details>
 
+<details>
+  <summary>Example (Err)</summary>
+
+```typescript
+// See `divide` implementation above
+const divideResult = divide(1, 0)
+
+console.log(divideResult.ok) // false
+```
+
+</details>
+
+#### `getOr(defaultValue: any): any`
+
+The `getOr` function will return the ok value if the result was wrapped with an
+`Ok` or the supplied default value if it was wrapped with `Err`.
+
+<details>
+  <summary>Example (Ok)</summary>
+
+```typescript
+// See `divide` implementation above
+const divideResult = divide(1, 1)
+
+console.log(divideResult.getOr('foo')) // 1
+```
+
+</details>
+
+<details>
+  <summary>Example (Err)</summary>
+
+```typescript
+// See `divide` implementation above
+const divideResult = divide(1, 0)
+
+console.log(divideResult.getOr('foo')) // foo
+```
+
+</details>
+
+#### `getOrThrow(err?: Error | string): any`
+
+The `getOrThrow` function will return the ok value if the result was wrapped
+with an `Ok` or throw an error using the `Err` value as a message. You can
+supply the error or the error message to throw as an optional parameter.
+
+<details>
+  <summary>Example (Ok)</summary>
+
+```typescript
+// See `divide` implementation above
+const divideResult = divide(1, 1)
+
+console.log(divideResult.getOrThrow('foo')) // 1
+```
+
+</details>
+
+<details>
+  <summary>Example (Err)</summary>
+
+```typescript
+// See `divide` implementation above
+const divideResult = divide(1, 0)
+
+console.log(divideResult.getOrThrow()) // Uncaught Error: Division by zero!
+console.log(divideResult.getOrThrow('foo')) // Uncaught Error: foo
+console.log(divideResult.getOrThrow(new MyCustomError('foo'))) // Uncaught MyCustomError: foo
+```
+
+</details>
+
+#### `getOrRun: <S>(fn: () => S): any`
+
+The `getOrRun` function will return the ok value if the result was wrapped with
+an `Ok` or run a function if the result was wrapped with an `Err`.
+
+<details>
+  <summary>Example (Ok)</summary>
+
+```typescript
+// See `divide` implementation above
+const divideResult = divide(1, 1)
+
+function greeting() {
+    return 'Hello world!'
+}
+
+console.log(divideResult.getOrRun(greeting)) // 1
+```
+
+</details>
+
+<details>
+  <summary>Example (Err)</summary>
+
+```typescript
+// See `divide` implementation above
+const divideResult = divide(1, 0)
+
+function greeting() {
+    return 'Hello world!'
+}
+
+console.log(divideResult.getOrRun(greeting)) // Hello world!
+```
+
+</details>
+
+#### `mapWithDefault<S, R>(defaultValue: S, fn: (parameter: any) => R): R`
+
+The `mapWithDefault` function will apply a function on the ok value if the
+result was wrapped with an `Ok` or the error value if the result was wrapped
+with an `Err`. The return type will be the same as the supplied function to map.
+
+<details>
+  <summary>Example (Ok)</summary>
+
+```typescript
+// See `divide` implementation above
+const divideResult = divide(1, 1)
+
+function addOne(num: number) {
+    return num + 1
+}
+
+console.log(divideResult.mapWithDefault(10, addOne)) // 2
+```
+
+</details>
+
+<details>
+  <summary>Example (Err)</summary>
+
+```typescript
+// See `divide` implementation above
+const divideResult = divide(1, 0)
+
+function addOne(num: number) {
+    return num + 1
+}
+
+console.log(divideResult.mapWithDefault(10, addOne)) // 11
+```
+
+</details>
+
+### `Ok(value: T)`
+
+The `Ok` functions accepts a value of type `T` that must match the `T` generic
+type passed to `Result<T, S>`
+
+#### Properties and functions unique to a result wrapped with an `Ok` function:
+
 #### `get(): T`
 
-The function `get` will unwrap the value wrapped with an `Ok`. You have to check the `ok` property first before being able to use `get`.
+The `get` function will unwrap the value wrapped with an `Ok`. You have to check
+the `ok` property first before being able to use `get`.
 
 <details>
   <summary>Example</summary>
@@ -184,16 +345,14 @@ The function `get` will unwrap the value wrapped with an `Ok`. You have to check
 ```typescript
 const okResult = OK('foo')
 
-if (okResult.ok === true) {
-    console.log(okResult.get()) // foo
-}
+if (okResult.ok === true) console.log(okResult.get()) // foo
 ```
 
 </details>
 
 #### `map: <S>(fn: (parameter: T) => S): S`
 
-The function `map` will unwrap and apply the supplied function on the value
+The `map` function will unwrap and apply the supplied function on the value
 wrapped with an `Ok`. The supplied function must accept the same type as the
 wrapped value type. The return type of the `map` function will be the same as
 the one of the supplied function. You have to check the `ok` property first
@@ -209,9 +368,7 @@ function capitalize(str: string) {
     return str.toUpperCase()
 }
 
-if (okResult.ok === true) {
-    console.log(okResult.map(capitalize)) // FOO
-}
+if (okResult.ok === true) console.log(okResult.map(capitalize)) // FOO
 ```
 
 </details>
