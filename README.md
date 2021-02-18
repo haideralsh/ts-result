@@ -136,12 +136,10 @@ if (insertResult.ok === true) {
 
 ## API
 
-### Types
+### `Result<T, S>`
 
-#### `Result<T, S>`
-
-A `Result` type accepts two generic types. The first (`T`) must match the object
-type passed to `Ok`, while the second (`S`) must match the object type passed to
+A `Result` type accepts two generics. The first (`T`) must match the value type
+passed to `Ok`, while the second (`S`) must match the value type passed to
 `Err`.
 
 A function with a return type `Result` _must_ return both an `Ok` and an `Err`
