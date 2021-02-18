@@ -42,7 +42,7 @@ entity back:
 ```typescript
 function addUser(name: string, email: string): User {
     const { uuid } = db.query('insert into user values (?, ?)', name, email)
-    return new UserService().getById(uuid)
+    return User.getById(uuid)
 }
 ```
 
@@ -57,7 +57,7 @@ failure happens:
 function addUser(name: string, email: string): User | null {
     try {
         const { uuid } = db.query('insert into user values (?, ?)', name, email)
-        return new UserService().getById(uuid)
+        return User.getById(uuid)
     } catch (err) {
         return null
     }
@@ -74,7 +74,7 @@ We can change the null to be a string instead:
 function addUser(name: string, email: string): User | string {
     try {
         const { uuid } = db.query('insert into user values (?, ?)', name, email)
-        return new UserService().getById(uuid)
+        return User.getById(uuid)
     } catch (err) {
         return err.message
     }
