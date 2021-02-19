@@ -1,6 +1,6 @@
 {
     "name": "result-ts",
-    "version": "1.0.0",
+    "version": "0.1.0",
     "description": "A zero-dependency Result type for typescript inspired by Rust",
     "files": [
         "dist"
