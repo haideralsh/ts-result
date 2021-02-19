@@ -4,6 +4,12 @@
 
 > A zero-dependency Result type for TypeScript inspired by Rust
 
+## Install
+
+```
+$ npm install @haideralsh/ts-result
+```
+
 ## Usage
 
 Example adapted from the
