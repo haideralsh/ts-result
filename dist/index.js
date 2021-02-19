@@ -1,6 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Err = exports.Ok = void 0;
+/**
+ * The Ok function takes a value of type `T` and returns an object with the type
+ * of `Ok<T>`
+ */
 var Ok = function (value) { return ({
     ok: true,
     get: function () { return value; },
@@ -13,6 +17,10 @@ var Ok = function (value) { return ({
     },
 }); };
 exports.Ok = Ok;
+/**
+ * The Err function takes a value of type `E` and returns an object with the
+ * type of `Err<E>`
+ */
 var Err = function (errorValue) { return ({
     ok: false,
     getError: function () { return errorValue; },
