@@ -121,7 +121,7 @@ function addUser(name: string, email: string): Result<string, string> {
 }
 ```
 
-Now the caller of this function can use the `ok` attribute to know which type of
+Now the caller of this function can use the `ok` property to know which type of
 result is returned
 
 ```typescript
@@ -136,14 +136,14 @@ if (insertResult.ok === true) {
 
 ## API
 
-### `Result<T, S>`
+### `Result<T, E>`
 
 A `Result` type accepts two generics. The first (`T`) must match the value type
-passed to `Ok`, while the second (`S`) must match the value type passed to
+passed to `Ok`, while the second (`E`) must match the value type passed to
 `Err`.
 
-A function with a return type `Result` _must_ return both an `Ok` and an `Err`
-results that match their respective types.
+A function with a return type `Result` _must_ return either an `Ok` or `Err` or
+both of them matching their respective types.
 
 ```typescript
 import { Result, Ok, Err } from 'result-ts'
@@ -159,7 +159,7 @@ function divide(a: number, b: number): Result<number, string> {
 
 #### Properties and functions on a result wrapped with `Ok` or `Err`:
 
-We can use the `ok` attribute in order to know if the result was wrapped with an
+We can use the `ok` property in order to know if the result was wrapped with an
 `Ok` or an `Err`
 
 #### `ok: boolean`
@@ -329,7 +329,7 @@ console.log(divideResult.mapWithDefault(10, addOne)) // 11
 
 ### `Ok(value: T)`
 
-The `Ok` functions accepts a value of type `T` that must match the `T` generic
+The `Ok` function accepts a value of type `T` that must match the `T` generic
 type passed to `Result<T, S>`
 
 #### Properties and functions unique to a result wrapped with an `Ok` function:
@@ -337,7 +337,7 @@ type passed to `Result<T, S>`
 #### `get(): T`
 
 The `get` function will unwrap the value wrapped with an `Ok`. You have to check
-the `ok` property first before being able to use `get`.
+if the `ok` property is `false` first before being able to use `get`.
 
 <details>
   <summary>Example</summary>
