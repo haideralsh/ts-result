@@ -372,3 +372,26 @@ if (okResult.ok === true) console.log(okResult.map(capitalize)) // FOO
 ```
 
 </details>
+
+### `Err(errorValue: E)`
+
+The `Err` function accepts a value of type `E` that must match the `E` generic
+type passed to `Result<T, E>`
+
+#### Properties and functions unique to a result wrapped with an `Err` function:
+
+#### `getError(): E`
+
+The `getError` function will unwrap the value wrapped with an `Err`. You have to
+check if the `ok` property is `false` first before being able to use `getError`.
+
+<details>
+  <summary>Example</summary>
+
+```typescript
+const errResult = Err('foo')
+
+if (okResult.ok === false) console.log(okResult.getError()) // foo
+```
+
+</details>
