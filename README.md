@@ -1,6 +1,6 @@
-![result-ts logo](logo.png)
+![ts-result logo](logo.png)
 
-# result-ts
+# ts-result
 
 > A zero-dependency Result type for TypeScript inspired by Rust
 
@@ -16,7 +16,7 @@ Example adapted from the
 [Elm guide](https://guide.elm-lang.org/error_handling/result.html)
 
 ```js
-import { Result, Ok, Err } from '@haideralsh/result-ts'
+import { Result, Ok, Err } from '@haideralsh/ts-result'
 
 function isReasonableAge(age: number): Result<number, string> {
     if (age < 0) return Err('Please try again after you are born.')
@@ -115,7 +115,7 @@ handling potentially erroneous results.
 We can rewrite the above example into this:
 
 ```typescript
-import { Result, Ok, Err } from '@haideralsh/result-ts'
+import { Result, Ok, Err } from '@haideralsh/ts-result'
 
 function addUser(name: string, email: string): Result<string, string> {
     try {
@@ -152,7 +152,7 @@ A function with a return type `Result` _must_ return either an `Ok` or `Err` or
 both of them matching their respective types.
 
 ```typescript
-import { Result, Ok, Err } from '@haideralsh/result-ts'
+import { Result, Ok, Err } from '@haideralsh/ts-result'
 
 function divide(a: number, b: number): Result<number, string> {
     if (b === 0) {
