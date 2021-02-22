@@ -336,14 +336,14 @@ console.log(divideResult.mapWithDefault(10, addOne)) // 11
 ### `Ok(value: T)`
 
 The `Ok` function accepts a value of type `T` that must match the `T` generic
-type passed to `Result<T, S>`
+type passed to `Result<T, E>`
 
 #### Properties and functions unique to a result wrapped with an `Ok` function:
 
 #### `get(): T`
 
 The `get` function will unwrap the value wrapped with an `Ok`. You have to check
-if the `ok` property is `false` first before being able to use `get`.
+if the `ok` property is `true` first before being able to use `get`.
 
 <details>
   <summary>Example</summary>
@@ -361,8 +361,8 @@ if (okResult.ok === true) console.log(okResult.get()) // foo
 The `map` function will unwrap and apply the supplied function on the value
 wrapped with an `Ok`. The supplied function must accept the same type as the
 wrapped value type. The return type of the `map` function will be the same as
-the one of the supplied function. You have to check the `ok` property first
-before being able to use `map`.
+the one of the supplied function. You have to check if the `ok` property is
+`true` first before being able to use `map`.
 
 <details>
   <summary>Example</summary>
