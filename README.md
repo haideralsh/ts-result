@@ -397,7 +397,7 @@ check if the `ok` property is `false` first before being able to use `getError`.
 ```typescript
 const errResult = Err('foo')
 
-if (okResult.ok === false) console.log(okResult.getError()) // foo
+if (errResult.ok === false) console.log(errResult.getError()) // foo
 ```
 
 </details>
