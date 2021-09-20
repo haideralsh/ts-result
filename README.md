@@ -2,7 +2,7 @@
 
 # ts-result
 
-> A zero-dependency Result type for TypeScript inspired by Rust
+> A zero-dependency Result type for TypeScript
 
 ## Install
 
